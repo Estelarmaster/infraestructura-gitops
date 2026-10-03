@@ -1,0 +1,27 @@
+---
+- name: Configurar aplicacion y reiniciar el servicio web solo si hay cambios
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Crear directorio de configuracion de la app
+      ansible.builtin.file:
+        path: /tmp/app_config
+        state: directory
+        mode: "0755"
+
+    - name: Inyectar configuracion de la base de datos
+      ansible.builtin.copy:
+        dest: /tmp/app_config/db_config.txt
+        mode: "0644"
+        content: |
+          entorno={{ entorno }}
+          host_bd={{ ip_servidor }}
+          estado=conexion_configurada
+      notify: Reiniciar servicio web
+
+  handlers:
+    # El nombre debe coincidir EXACTAMENTE con el del notify
+    - name: Reiniciar servicio web
+      ansible.builtin.debug:
+        msg: "=== Simulando reinicio de Nginx en {{ entorno }} ==="

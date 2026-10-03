@@ -1,0 +1,20 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+terraform/salida/
+
+# Archivo generado por Terraform
+ansible/hosts.ini
+
+# Ansible
+*.retry
+
+# SO / editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
